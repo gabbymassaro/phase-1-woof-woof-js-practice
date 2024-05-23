@@ -1,11 +1,3 @@
-// Step3: When a user clicks on a pup's span in the div#dog-bar, that pup's info 
-// (image, name, and isGoodDog status) should show up in the div with the id of 
-// "dog-info". Display the pup's info in the div with the following elements:
-  // -- an img tag with the pup's image url
-  // -- an h2 with the pup's name
-  // -- a button that says "Good Dog!" or "Bad Dog!" based on whether isGoodDog is
-  // true or false. 
-
 // Step4: When a user clicks the Good Dog/Bad Dog button, two things should happen:
     // -- The button's text should change from Good to Bad or Bad to Good
     // --  The corresponding pup object in the database should be updated to 
@@ -20,10 +12,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
   fetch('http://localhost:3000/pups')
     .then(response => response.json())
     .then(data => {
-      data.forEach(createDogBar)
+      data.forEach(renderDogs)
+      console.log(data)
     })
 
-  const createDogBar = (dog) => {
+  const renderDogs = (dog) => {
     let span = document.createElement("span")
     span.innerText = dog.name
     dogBar.appendChild(span)
@@ -33,16 +26,28 @@ document.addEventListener("DOMContentLoaded", (e) => {
       let img = document.createElement('img')
       let h2 = document.createElement('h2')
       let button = document.createElement('button')
-  
+
       img.src = dog.image
       h2.innerText = dog.name
-      button.innerText = "Good Dog!"
-  
+
       dogInfo.appendChild(img)
       dogInfo.appendChild(h2)
       dogInfo.appendChild(button)
+
+      if (dog.isGoodDog === true) {
+        button.innerText = "Good Dog!"
+      } else {
+        button.innerText = "Bad Dog!"
+      }
+
+        button.addEventListener('click', () => {
+          console.log(button.innerText)
+        })
+
     })
   }
+
+
 
 
   
