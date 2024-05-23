@@ -1,8 +1,3 @@
-// Step2: On the page, there is a div with the id of "dog-bar". When the page loads, 
-// use fetch to get all of the pup data from your server. When you have this 
-// information, you'll need to add a span with the pup's name to the dog bar 
-// (ex: <span>Mr. Bonkers</span>).
-
 // Step3: When a user clicks on a pup's span in the div#dog-bar, that pup's info 
 // (image, name, and isGoodDog status) should show up in the div with the id of 
 // "dog-info". Display the pup's info in the div with the following elements:
@@ -20,6 +15,7 @@
 
 document.addEventListener("DOMContentLoaded", (e) => {
   let dogBar = document.getElementById("dog-bar")
+  let dogInfo = document.getElementById("dog-info")
 
   fetch('http://localhost:3000/pups')
     .then(response => response.json())
@@ -31,8 +27,23 @@ document.addEventListener("DOMContentLoaded", (e) => {
     let span = document.createElement("span")
     span.innerText = dog.name
     dogBar.appendChild(span)
-    console.log(dog.name)
+
+    span.addEventListener('click', () => {
+      dogInfo.innerHTML = ""
+      let img = document.createElement('img')
+      let h2 = document.createElement('h2')
+      let button = document.createElement('button')
+  
+      img.src = dog.image
+      h2.innerText = dog.name
+      button.innerText = "Good Dog!"
+  
+      dogInfo.appendChild(img)
+      dogInfo.appendChild(h2)
+      dogInfo.appendChild(button)
+    })
   }
+
 
   
   
