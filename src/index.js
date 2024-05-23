@@ -1,10 +1,3 @@
-// Step4: When a user clicks the Good Dog/Bad Dog button, two things should happen:
-    // -- The button's text should change from Good to Bad or Bad to Good
-    // --  The corresponding pup object in the database should be updated to 
-    // reflect the new isGoodDog value
-// You can update a dog by making a PATCH request to /pups/:id and including the 
-// updated isGoodDog status in the body of the request.
-
 document.addEventListener("DOMContentLoaded", (e) => {
   let dogBar = document.getElementById("dog-bar")
   let dogInfo = document.getElementById("dog-info")
@@ -42,6 +35,24 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
         button.addEventListener('click', () => {
           console.log(button.innerText)
+          if (button.innerText === "Good Dog!") {
+            button.innerText = "Bad Dog!"
+            dog.isGoodDog = false
+          } else {
+            button.innerText = "Good Dog!"
+            dog.isGoodDog = true
+          }
+
+          fetch('http://localhost:3000/pups/' + dog.id, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({
+              "isGoodDog": dog.isGoodDog
+            })
+          })
         })
 
     })
